@@ -9,15 +9,13 @@ import { compare } from 'bcrypt';
 const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
-	// Configure one or more authentication providers
 	secret: process.env.NEXTAUTH_SECRET,
+	session: {
+		strategy: 'jwt',
+		maxAge: 30 * 24 * 3600,
+	},
 	// adapter: PrismaAdapter(prisma),
 	providers: [
-		// GitHubProvider({
-		// 	clientId: process.env.GITHUB_ID as string,
-		// 	clientSecret: process.env.GITHUB_SECRET as string,
-		// }),
-		// ...add more providers here,
 		Credentials({
 			name: 'Sign In',
 			credentials: {
@@ -52,9 +50,9 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-  // pages:{
-  //   signIn: '/sign-in'
-  // }
+	// pages:{
+	//   signIn: '/sign-in'
+	// }
 	callbacks: {
 		session: ({ session, token }) => {
 			console.log('Session Callback', { session, token });
