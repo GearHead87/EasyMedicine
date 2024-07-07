@@ -4,7 +4,6 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 const prisma = new PrismaClient();
-
 export const authOptions: NextAuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 	session: {
@@ -49,9 +48,9 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
-	// pages:{
-	//   signIn: '/sign-in'
-	// }
+	pages:{
+	  signIn: '/sign-in'
+	},
 	callbacks: {
 		session: ({ session, token }) => {
 			console.log('Session Callback', { session, token });

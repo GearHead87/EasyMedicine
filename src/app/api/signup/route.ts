@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 				email: email,
 				password: hashedPassword,
 				image: fileUrl,
-				role: 'user',
+				role: 'USER',
 			},
 		});
 

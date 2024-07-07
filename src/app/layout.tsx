@@ -4,6 +4,7 @@ import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import NavMain from '@/components/shared/NavMain';
 import ReduxProvider from '@/components/provider/ReduxProvider';
+import { Providers } from '@/components/provider/SessionProvider';
 
 const fontSans = FontSans({
 	subsets: ['latin'],
@@ -28,11 +29,14 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 			>
-				<ReduxProvider>
-					<NavMain>
-						<div className="container mx-auto">{children}</div>
-					</NavMain>
-				</ReduxProvider>
+				{' '}
+				<Providers>
+					<ReduxProvider>
+						<NavMain>
+							<div className="container mx-auto">{children}</div>
+						</NavMain>
+					</ReduxProvider>
+				</Providers>
 			</body>
 		</html>
 	);

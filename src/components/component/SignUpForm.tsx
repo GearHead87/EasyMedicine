@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
+import React from 'react';
 
-export function SignUpForm() {
+export const SignUpForm = () => {
 	const axiosCommon = useAxiosCommon();
-	const formSubmit = async (e) => {
+	const formSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const form = e.target;
 		const formData = new FormData(form);
@@ -63,4 +64,4 @@ export function SignUpForm() {
 			</form>
 		</div>
 	);
-}
+};
