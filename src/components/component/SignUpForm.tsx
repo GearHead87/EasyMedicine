@@ -12,7 +12,7 @@ export function SignUpForm() {
 		const formData = new FormData(form);
 
 		try {
-			const { data } = await axiosCommon.post('/api/image', formData, {
+			const { data } = await axiosCommon.post('/api/signup', formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
 			console.log(data);

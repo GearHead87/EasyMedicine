@@ -67,8 +67,11 @@ export async function POST(req: NextRequest) {
 				email: email,
 				password: hashedPassword,
 				image: fileUrl,
+				role: 'user',
 			},
 		});
+
+		console.log("User Created", result);
 
 		return NextResponse.json({ message: 'User Created Successfully' });
 	} catch (e) {
