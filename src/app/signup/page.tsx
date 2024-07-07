@@ -1,7 +1,7 @@
 import { SignUpForm } from '@/components/component/SignUpForm';
 import React from 'react';
 
-const page = () => {
+const SignUpPage = () => {
 	return (
 		<div className="mx-auto max-w-md space-y-6">
 			<div className="space-y-2 text-center">
@@ -13,4 +13,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default SignUpPage;

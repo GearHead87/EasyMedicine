@@ -1,10 +1,7 @@
-import { PrismaAdapter } from '@auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
-import NextAuth from 'next-auth';
-import { NextAuthOptions } from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import GitHubProvider from 'next-auth/providers/github';
 import { compare } from 'bcrypt';
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
 
 const prisma = new PrismaClient();
 
@@ -81,3 +78,4 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+

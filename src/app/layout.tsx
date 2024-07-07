@@ -25,13 +25,13 @@ export default function RootLayout({
 			<body
 				className={cn(
 					'min-h-screen bg-background font-sans antialiased',
-					fontSans.variable,
-					
+					fontSans.variable
 				)}
 			>
 				<ReduxProvider>
-					<NavMain />
-					<div className="container mx-auto">{children}</div>
+					<NavMain>
+						<div className="container mx-auto border-2 border-red-600">{children}</div>
+					</NavMain>
 				</ReduxProvider>
 			</body>
 		</html>
