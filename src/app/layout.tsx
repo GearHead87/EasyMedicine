@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import NavMain from '@/components/shared/NavMain';
+import ReduxProvider from '@/components/provider/ReduxProvider';
 
 const fontSans = FontSans({
 	subsets: ['latin'],
@@ -27,8 +28,10 @@ export default function RootLayout({
 					fontSans.variable
 				)}
 			>
-				<NavMain />
-				<div className="container mx-auto">{children}</div>
+				<ReduxProvider>
+					<NavMain />
+					<div className="container mx-auto">{children}</div>
+				</ReduxProvider>
 			</body>
 		</html>
 	);
