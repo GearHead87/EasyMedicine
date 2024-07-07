@@ -30,7 +30,7 @@ export default function RootLayout({
 			>
 				<ReduxProvider>
 					<NavMain>
-						<div className="container mx-auto border-2 border-red-600">{children}</div>
+						<div className="container mx-auto">{children}</div>
 					</NavMain>
 				</ReduxProvider>
 			</body>

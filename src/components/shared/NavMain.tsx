@@ -52,9 +52,8 @@ export default function NavMain({ children }) {
 			<div className="flex flex-1">
 				{isSidebarOpen && <SideBar />}
 				{/* <main className="flex-1 p-4" /> */}
+				<div className="mt-10 p-4 mx-auto">{children}</div>
 			</div>
-			<div className="mt-10 p-4">{children}</div>
 		</div>
 	);
 }
-
