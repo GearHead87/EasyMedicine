@@ -69,7 +69,7 @@ const CategoryPage = () => {
 
 	const renderCategories = (categories: Category[]) => {
 		return categories.map((category) => (
-			<div key={category.id} className="mb-2">
+			<div key={category.id} className="mb-2 space-y-2">
 				<p className="font-semibold flex justify-between items-center">
 					{category.name}
 					<Button
