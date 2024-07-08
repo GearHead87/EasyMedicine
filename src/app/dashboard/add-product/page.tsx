@@ -7,9 +7,6 @@ import useAxiosCommon from '@/hooks/useAxiosCommon';
 import React, { useState } from 'react';
 
 const AddProductPage = () => {
-	// const dispatch = useDispatch();
-	// const router = useRouter();
-
 	const [productName, setProductName] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0);
@@ -71,13 +68,6 @@ const AddProductPage = () => {
 		} catch (e) {
 			console.log(e);
 		}
-
-
-		// Dispatch the addProduct action to add the product
-		// dispatch(addProduct(productData));
-
-		// Redirect to the products list page
-		// router.push('/admin/products');
 	};
 
 	return (
