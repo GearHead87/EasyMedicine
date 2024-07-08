@@ -33,7 +33,7 @@ const CategoryPage = () => {
 
 	const fetchCategories = async () => {
 		try {
-			const { data } = await axiosCommon.get('/api/category');
+			const { data } = await axiosCommon.get('/api/categories');
 			setCategories(data);
 		} catch (e) {
 			console.error(e);
@@ -49,7 +49,7 @@ const CategoryPage = () => {
 		};
 
 		try {
-			const { data } = await axiosCommon.post('/api/category', categoryData);
+			const { data } = await axiosCommon.post('/api/categories', categoryData);
 			fetchCategories(); // Refresh categories after adding
 			setCategoryName('');
 			setParentId(null);
@@ -60,7 +60,7 @@ const CategoryPage = () => {
 
 	const handleDelete = async (categoryId: string) => {
 		try {
-			await axiosCommon.delete('/api/category', { data: { id: categoryId } });
+			await axiosCommon.delete('/api/categories', { data: { id: categoryId } });
 			fetchCategories(); // Refresh categories after deletion
 		} catch (e) {
 			console.error(e);
