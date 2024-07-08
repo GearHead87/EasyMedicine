@@ -15,7 +15,16 @@ export async function POST(req: NextRequest) {
 	console.log(name, email, password, image);
 
 	if (!name || !email || !password || !image) {
-		return NextResponse.json({ error: 'No image provided' }, { status: 400 });
+		return NextResponse.json({ error: 'Fields are not provided' }, { status: 400 });
+	}
+	
+	const isExist = await prisma.user.findUnique({
+		where: {
+			email: email,
+		},
+	});
+	if (isExist) {
+		return NextResponse.json({ message: 'User Already Exist' }, { status: 409 });
 	}
 
 	const buffer = Buffer.from(await image.arrayBuffer());
@@ -51,14 +60,6 @@ export async function POST(req: NextRequest) {
 		const fileUrl = `${relativeUploadDir}/${filename}`;
 
 		// Save to database
-		const isExist = await prisma.user.findUnique({
-			where: {
-				email: email,
-			},
-		});
-		if (isExist) {
-			return NextResponse.json({ message: 'User Already Exist' }, { status: 409 });
-		}
 
 		const hashedPassword = hashSync(password, 12);
 		const result = await prisma.user.create({
@@ -71,7 +72,7 @@ export async function POST(req: NextRequest) {
 			},
 		});
 
-		console.log("User Created", result);
+		console.log('User Created', result);
 
 		return NextResponse.json({ message: 'User Created Successfully' });
 	} catch (e) {
