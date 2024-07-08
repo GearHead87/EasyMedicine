@@ -1,3 +1,4 @@
+import Dashboard from '@/app/dashboard/Dashboard';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -11,8 +12,8 @@ type Props = {
 };
 
 const NavBar = ({ toggleSidebar }: Props) => {
-	const data  = useSession();
-	console.log(data);
+	const data = useSession();
+	// console.log(data);
 	return (
 		<>
 			<header className="flex items-center h-16 px-4 border-b shrink-0 md:px-6">
@@ -44,13 +45,12 @@ const NavBar = ({ toggleSidebar }: Props) => {
 							4
 						</span>
 					</Button>
-					{data?.status == 'authenticated' ? (
-						<Link
-							href={'dashboard'}
-							className={cn(buttonVariants({ variant: 'outline' }))}
-						>
-							Dashboard
-						</Link>
+					{data?.status === 'loading' ? (
+						<button className={cn(buttonVariants({ variant: 'outline' }))} disabled>
+							Loading...
+						</button>
+					) : data?.status === 'authenticated' ? (
+						<Dashboard data={data} />
 					) : (
 						<Link
 							href={'/signin'}
