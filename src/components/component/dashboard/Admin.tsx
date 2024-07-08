@@ -15,11 +15,11 @@ const Admin = () => {
 			<DropdownMenuLabel>My Account</DropdownMenuLabel>
 			<DropdownMenuSeparator />
 			<DropdownMenuItem>
-				<Link href={'/add-product'}>Add Product</Link>
+				<Link href={'/dashboard/add-product'}>Add Product</Link>
 			</DropdownMenuItem>
-			<DropdownMenuItem>View All Product</DropdownMenuItem>
+			<DropdownMenuItem><Link href={'/manage-product'}>Manage Product</Link></DropdownMenuItem>
 			<DropdownMenuItem>
-				<Link href={'manage-category'}>Manage Category</Link>
+				<Link href={'/dashboard/manage-category'}>Manage Category</Link>
 			</DropdownMenuItem>
 			<DropdownMenuItem>Subscription</DropdownMenuItem>
 		</>
