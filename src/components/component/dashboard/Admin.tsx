@@ -21,7 +21,7 @@ const Admin = () => {
 			<DropdownMenuItem>
 				<Link href={'/dashboard/manage-category'}>Manage Category</Link>
 			</DropdownMenuItem>
-			<DropdownMenuItem>Subscription</DropdownMenuItem>
+			<DropdownMenuItem>Manage Order</DropdownMenuItem>
 		</>
 	);
 };

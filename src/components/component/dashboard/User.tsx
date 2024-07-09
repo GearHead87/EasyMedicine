@@ -7,16 +7,17 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
 const User = () => {
 	return (
 		<>
 			<DropdownMenuLabel>My Account</DropdownMenuLabel>
 			<DropdownMenuSeparator />
-			<DropdownMenuItem>Profile</DropdownMenuItem>
-			<DropdownMenuItem>Billing</DropdownMenuItem>
-			<DropdownMenuItem>Team</DropdownMenuItem>
-			<DropdownMenuItem>Subscription</DropdownMenuItem>
+			{/* <DropdownMenuItem>Profile</DropdownMenuItem> */}
+			<DropdownMenuItem><Link href={'/order-details'}>Order History</Link> </DropdownMenuItem>
+			{/* <DropdownMenuItem>Team</DropdownMenuItem> */}
+			{/* <DropdownMenuItem>Subscription</DropdownMenuItem> */}
 		</>
 	);
 };
