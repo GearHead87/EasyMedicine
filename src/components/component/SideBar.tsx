@@ -1,72 +1,51 @@
-import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { ChevronDownIcon, HeartIcon } from 'lucide-react';
-import { Button } from '../ui/button';
+'use client';
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion';
+import { useGetCategoriesQuery } from '@/redux/services/categoriesApi';
+import { Heart } from 'lucide-react';
 
-const SideBar = () => {
+const Sidebar = () => {
+	const { data: categories, error, isLoading } = useGetCategoriesQuery({});
+
+	if (isLoading) return <div>Loading...</div>;
+	if (error) return <div>Error loading categories</div>;
+
+	const renderCategories = (categories) => {
+		return categories.map((category) => (
+			<AccordionItem key={category.id} value={`item-${category.id}`}>
+				<AccordionTrigger>
+					<div className="flex items-center">{category.name}</div>
+				</AccordionTrigger>
+				<AccordionContent>
+					{category.subcategories && category.subcategories.length > 0 && (
+						<ul className="ml-4">
+							{category.subcategories.map((sub) => (
+								<li key={sub.id} className="mb-2">
+									{sub.name}
+								</li>
+							))}
+						</ul>
+					)}
+				</AccordionContent>
+			</AccordionItem>
+		));
+	};
+
 	return (
-		<aside className="w-64 p-4 border-r">
+		<div className="w-64 h-full bg-gray-100 p-4">
 			<div className="flex items-center mb-4">
-				<HeartIcon className="w-5 h-5 text-red-500" />
-				<span className="ml-2 text-lg font-semibold">Favourites</span>
+				<Heart className='text-red-500 mr-2' />
+				<span className="font-bold">Favourites</span>
 			</div>
-			<div className="space-y-2">
-				<Card>
-					<CardHeader className="flex items-center justify-between">
-						<CardTitle className="text-sm font-medium">Common Conditions</CardTitle>
-						<ChevronDownIcon className="w-4 h-4" />
-					</CardHeader>
-					<CardContent>
-						<div className="space-y-1">
-							<Button variant="ghost" className="w-full text-left">
-								Blood Pressure & Heart
-							</Button>
-							<Button variant="ghost" className="w-full text-left">
-								Heart Disease
-							</Button>
-						</div>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader className="flex items-center justify-between">
-						<CardTitle className="text-sm font-medium">
-							Blood Pressure & Heart
-						</CardTitle>
-						<ChevronDownIcon className="w-4 h-4" />
-					</CardHeader>
-					<CardContent>
-						<div className="space-y-1">
-							<Button variant="ghost" className="w-full text-left">
-								Blood Pressure
-							</Button>
-							<Button variant="ghost" className="w-full text-left">
-								Heart Disease
-							</Button>
-							<Button variant="ghost" className="w-full text-left">
-								Cholesterol
-							</Button>
-						</div>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardHeader className="flex items-center justify-between">
-						<CardTitle className="text-sm font-medium">Cholesterol</CardTitle>
-						<ChevronDownIcon className="w-4 h-4" />
-					</CardHeader>
-					<CardContent>
-						<div className="space-y-1">
-							<Button variant="ghost" className="w-full text-left">
-								High Cholesterol
-							</Button>
-							<Button variant="ghost" className="w-full text-left">
-								Low Cholesterol
-							</Button>
-						</div>
-					</CardContent>
-				</Card>
-			</div>
-		</aside>
+			<Accordion type="multiple" collapsible>
+				{renderCategories(categories.filter((category) => !category.parentId))}
+			</Accordion>
+		</div>
 	);
 };
 
-export default SideBar;
+export default Sidebar;

@@ -129,23 +129,6 @@ const CategoryPage = () => {
 					</Select>
 				</div>
 
-				{/* <div>
-          <Label htmlFor="Parent Category">Parent Category (optional)</Label>
-          <select
-            name="parentCategory"
-            value={parentId || ''}
-            onChange={(e) => setParentId(e.target.value || null)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          >
-            <option value="">None</option>
-            {categories.filter(category => !category.parentId).map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div> */}
-
 				<Button
 					type="submit"
 					className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 mt-4"

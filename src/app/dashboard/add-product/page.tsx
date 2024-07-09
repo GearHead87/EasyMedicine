@@ -2,8 +2,16 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
+import { useGetCategoriesQuery } from '@/redux/services/categoriesApi';
 import React, { useState } from 'react';
 
 const AddProductPage = () => {
@@ -16,6 +24,8 @@ const AddProductPage = () => {
 		{ mg: 0, price: 0 },
 	]);
 	const [image, setImage] = useState<File | null>(null);
+
+	const { data: categories, error, isLoading } = useGetCategoriesQuery({});
 
 	const axiosCommon = useAxiosCommon();
 
@@ -117,7 +127,7 @@ const AddProductPage = () => {
 				/>
 			</div>
 
-			<div>
+			{/* <div>
 				<Label htmlFor="Category ID">Category ID</Label>
 				<Input
 					type="text"
@@ -126,6 +136,32 @@ const AddProductPage = () => {
 					onChange={(e) => setCategoryId(e.target.value)}
 					required
 				/>
+			</div> */}
+
+			<div>
+				<Label htmlFor="Category ID">Category</Label>
+				<Select onValueChange={(value) => setCategoryId(value)}>
+					<SelectTrigger>
+						<SelectValue placeholder="Select a category" />
+					</SelectTrigger>
+					<SelectContent>
+						{isLoading ? (
+							<SelectItem value=" " disabled>
+								Loading...
+							</SelectItem>
+						) : error ? (
+							<SelectItem value=" " disabled>
+								Error loading categories
+							</SelectItem>
+						) : (
+							categories?.map((category) => (
+								<SelectItem key={category.id} value={category.id}>
+									{category.name}
+								</SelectItem>
+							))
+						)}
+					</SelectContent>
+				</Select>
 			</div>
 
 			<div>

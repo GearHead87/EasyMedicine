@@ -64,7 +64,7 @@ model Variant {
   mg        Int
   price     Float
   productId String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,7 +73,7 @@ model Variant {
 model Order {
   id                String          @id @default(cuid())
   userId            String
-  user              User            @relation(fields: [userId], references: [id])
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderItems        OrderItem[]
   totalAmount       Float
   status            OrderStatus
@@ -117,7 +117,7 @@ model CartItem {
   userId     String
   user       User    @relation(fields: [userId], references: [id])
   productId  String
-  product    Product @relation(fields: [productId], references: [id])
+  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity   Int
   selectedMg Int?
   price      Float
