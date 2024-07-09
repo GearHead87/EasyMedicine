@@ -22,7 +22,7 @@ const NavBar = ({ toggleSidebar }: Props) => {
 				</Button>
 				<div className="flex items-center ml-4">
 					<HospitalIcon className="w-6 h-6 text-primary" />
-					<span className="ml-2 text-2xl font-bold text-primary">Medicine</span>
+					<Link href={'/'} className="ml-2 text-2xl font-bold text-primary">Medicine</Link>
 				</div>
 				<form className="flex-1 ml-auto">
 					<div className="relative">

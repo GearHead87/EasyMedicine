@@ -1,4 +1,5 @@
 // src/app/api/products/[id]/route.ts
+import { deleteImage } from '@/lib/deleteImage';
 import prisma from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -26,7 +27,11 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 		const res = await prisma.product.delete({
 			where: { id },
 		});
-    console.log('delete Product=>', res);
+		console.log('delete Product=>', res);
+
+		// Delete the product image
+		await deleteImage(product.image);
+
 		return NextResponse.json({ message: 'Product deleted successfully' }, { status: 200 });
 	} catch (error) {
 		console.error('Error deleting product:', error);
