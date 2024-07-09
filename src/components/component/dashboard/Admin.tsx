@@ -17,7 +17,7 @@ const Admin = () => {
 			<DropdownMenuItem>
 				<Link href={'/dashboard/add-product'}>Add Product</Link>
 			</DropdownMenuItem>
-			<DropdownMenuItem><Link href={'/manage-product'}>Manage Product</Link></DropdownMenuItem>
+			<DropdownMenuItem><Link href={'dashboard/manage-product'}>Manage Product</Link></DropdownMenuItem>
 			<DropdownMenuItem>
 				<Link href={'/dashboard/manage-category'}>Manage Category</Link>
 			</DropdownMenuItem>

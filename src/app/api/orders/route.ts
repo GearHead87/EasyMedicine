@@ -70,7 +70,11 @@ export async function GET(req: NextRequest) {
 			// Retrieve all orders in the database
 			orders = await prisma.order.findMany({
 				include: {
-					orderItems: true,
+					orderItems: {
+						include: {
+							product: true,
+						},
+					},
 					// shippingAddress: true, // Include if needed
 				},
 			});

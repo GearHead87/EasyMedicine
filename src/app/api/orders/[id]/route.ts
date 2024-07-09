@@ -1,31 +1,23 @@
+import prisma from '@/lib/prisma';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+	const orderId = params.id;
+	console.log(orderId);
 
-export async function GET(req: NextRequest) {
-  const { id } = req.query;
-
-  try {
-    const order = await prisma.order.findUnique({
-      where: { id },
-      include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
-        // shippingAddress: true,
-      },
-    });
-
-    if (!order) {
-      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
-    }
-
-    return NextResponse.json({ order }, { status: 200 });
-  } catch (error) {
-    console.error('Error fetching order:', error);
-    return NextResponse.json({ error: 'Failed to fetch order' }, { status: 500 });
-  }
+	const { status } = await req.json();
+	console.log(status);
+	try {
+		const updatedOrder = await prisma.order.update({
+			where: { id: orderId },
+			data: {
+				status,
+			},
+		});
+		return NextResponse.json({ updatedOrder });
+	} catch (error) {
+		console.error('Error updating order status:', error);
+		return NextResponse.json({ error: 'Failed to update order status' });
+	}
 }
