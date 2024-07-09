@@ -42,10 +42,6 @@ const NavBar = ({ toggleSidebar }: Props) => {
 					</div>
 					<Button variant="ghost" size="icon" className="relative">
 						<CartDropdown />
-						<ShoppingCartIcon className="w-6 h-6" />
-						<span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full">
-							4
-						</span>
 					</Button>
 					{data?.status === 'loading' ? (
 						<button className={cn(buttonVariants({ variant: 'outline' }))} disabled>
