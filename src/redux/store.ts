@@ -13,23 +13,19 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
 	cart: cartReducer,
-	// [api.reducerPath]: api.reducer,
+	[productApi.reducerPath]: productApi.reducer,
+	[categoriesApi.reducerPath]: categoriesApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-	reducer: {
-		persistedReducer,
-		[productApi.reducerPath]: productApi.reducer,
-		[categoriesApi.reducerPath]: categoriesApi.reducer,
-	},
+	reducer: persistedReducer,
 
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ serializableCheck: false }).concat(
 			productApi.middleware,
 			categoriesApi.middleware
-			// api.middleware
 		),
 });
 

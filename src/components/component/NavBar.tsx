@@ -6,6 +6,7 @@ import { HospitalIcon, MapPinIcon, MenuIcon, SearchIcon, ShoppingCartIcon } from
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { MouseEventHandler } from 'react';
+import CartDropdown from './cart/CartDropdown';
 
 type Props = {
 	toggleSidebar: MouseEventHandler<HTMLButtonElement>;
@@ -40,6 +41,7 @@ const NavBar = ({ toggleSidebar }: Props) => {
 						<span className="ml-1 text-sm">Sirajganj</span>
 					</div>
 					<Button variant="ghost" size="icon" className="relative">
+						<CartDropdown />
 						<ShoppingCartIcon className="w-6 h-6" />
 						<span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full">
 							4
