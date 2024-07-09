@@ -5,6 +5,7 @@ import './globals.css';
 import NavMain from '@/components/shared/NavMain';
 import ReduxProvider from '@/components/provider/ReduxProvider';
 import { Providers } from '@/components/provider/SessionProvider';
+import { Toaster } from '@/components/ui/sonner';
 
 const fontSans = FontSans({
 	subsets: ['latin'],
@@ -33,6 +34,7 @@ export default function RootLayout({
 				<Providers>
 					<ReduxProvider>
 						<NavMain>
+							<Toaster />
 							<div className="container mx-auto">{children}</div>
 						</NavMain>
 					</ReduxProvider>

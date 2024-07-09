@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signIn } from 'next-auth/react';
+import { toast } from 'sonner'
 
 const SignInForm = () => {
 	const formSubmit = async (e) => {
@@ -14,6 +15,7 @@ const SignInForm = () => {
 			redirect: true,
 			callbackUrl: '/',
 		});
+		toast("Sign in successful")
 	};
 	return (
 		<div>

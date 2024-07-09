@@ -3,9 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'sonner';
 
 export const SignUpForm = () => {
+	const router = useRouter();
 	const axiosCommon = useAxiosCommon();
 	const formSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -16,6 +19,8 @@ export const SignUpForm = () => {
 			const { data } = await axiosCommon.post('/api/signup', formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
+			toast("Sign up successful")
+			router.push('/')
 			console.log(data);
 		} catch (e) {
 			console.log(e);
