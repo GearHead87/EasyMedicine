@@ -14,7 +14,7 @@ import Admin from '@/components/component/dashboard/Admin';
 import { signOut } from 'next-auth/react';
 
 const Dashboard = ({ data }) => {
-	console.log(data?.user);
+	// console.log(data?.user);
 	return (
 		<>
 			<DropdownMenu>

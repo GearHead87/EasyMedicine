@@ -71,17 +71,19 @@ model Variant {
 }
 
 model Order {
-  id                String          @id @default(cuid())
-  userId            String
-  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orderItems        OrderItem[]
-  totalAmount       Float
-  status            OrderStatus
-  shippingAddressId String
-  shippingAddress   ShippingAddress @relation(fields: [shippingAddressId], references: [id])
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems  OrderItem[]
+  totalAmount Float
+  status      OrderStatus
+  // shippingAddressId String
+  // shippingAddress   ShippingAddress @relation(fields: [shippingAddressId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  ShippingAddress   ShippingAddress? @relation(fields: [shippingAddressId], references: [id])
+  shippingAddressId String?
 }
 
 model OrderItem {

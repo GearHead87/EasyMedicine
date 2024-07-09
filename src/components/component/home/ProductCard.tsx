@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../../../redux/features/cart/cartSlice';
 import Image from 'next/image';
+import CartDropdown from '../cart/CartDropdown';
 
 const ProductCard = ({ product }) => {
 	const dispatch = useDispatch();
@@ -43,8 +44,8 @@ const ProductCard = ({ product }) => {
 						Out of Stock
 					</Button>
 				) : isInCart ? (
-					<Button variant="default" onClick={handleRemoveFromCart}>
-						View Cart
+					<Button variant="default">
+						View Cart(notworking)
 					</Button>
 				) : (
 					<Button variant="default" onClick={handleAddToCart}>

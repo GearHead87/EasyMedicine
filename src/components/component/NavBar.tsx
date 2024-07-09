@@ -23,7 +23,9 @@ const NavBar = ({ toggleSidebar }: Props) => {
 				</Button>
 				<div className="flex items-center ml-4">
 					<HospitalIcon className="w-6 h-6 text-primary" />
-					<Link href={'/'} className="ml-2 text-2xl font-bold text-primary">Medicine</Link>
+					<Link href={'/'} className="ml-2 text-2xl font-bold text-primary">
+						Medicine
+					</Link>
 				</div>
 				<form className="flex-1 ml-auto">
 					<div className="relative">
@@ -40,9 +42,15 @@ const NavBar = ({ toggleSidebar }: Props) => {
 						<MapPinIcon className="w-6 h-6 text-muted-foreground" />
 						<span className="ml-1 text-sm">Sirajganj</span>
 					</div>
-					<Button variant="ghost" size="icon" className="relative">
-						<CartDropdown />
-					</Button>
+					{data?.status === 'loading' ? (
+						<Button variant="ghost" size="icon" className="relative" disabled>
+							<CartDropdown />
+						</Button>
+					) : (
+						<Button variant="ghost" size="icon" className="relative">
+							<CartDropdown />
+						</Button>
+					)}
 					{data?.status === 'loading' ? (
 						<button className={cn(buttonVariants({ variant: 'outline' }))} disabled>
 							Loading...
