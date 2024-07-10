@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../../../redux/features/cart/cartSlice';
 import Image from 'next/image';
 import CartDropdown from '../cart/CartDropdown';
+import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
 	const dispatch = useDispatch();
@@ -29,24 +30,24 @@ const ProductCard = ({ product }) => {
 
 	return (
 		<Card className={`w-full max-w-sm ${isOutOfStock ? 'opacity-50' : ''}`}>
-			<CardHeader>
-				<Image src={product.image} alt="Product" width={500} height={500}/>
-				<CardTitle>{product.name}</CardTitle>
-				<CardDescription>{product.description}</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<p>{product.details}</p>
-				<p>৳ {product.price}</p>
-			</CardContent>
+			<Link href={`products/${product.id}`}>
+				<CardHeader>
+					<Image src={product.image} alt="Product" width={500} height={500} />
+					<CardTitle>{product.name}</CardTitle>
+					<CardDescription>{product.description}</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<p>{product.details}</p>
+					<p>৳ {product.price}</p>
+				</CardContent>
+			</Link>
 			<CardFooter>
 				{isOutOfStock ? (
 					<Button variant="destructive" disabled>
 						Out of Stock
 					</Button>
 				) : isInCart ? (
-					<Button variant="default">
-						View Cart(notworking)
-					</Button>
+					<Button variant="default">View Cart(notworking)</Button>
 				) : (
 					<Button variant="default" onClick={handleAddToCart}>
 						Add to Cart
