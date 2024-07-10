@@ -17,11 +17,13 @@ const Admin = () => {
 			<DropdownMenuItem>
 				<Link href={'/dashboard/add-product'}>Add Product</Link>
 			</DropdownMenuItem>
-			<DropdownMenuItem><Link href={'dashboard/manage-product'}>Manage Product</Link></DropdownMenuItem>
+			<DropdownMenuItem>
+				<Link href={'/dashboard/manage-product'}>Manage Product</Link>
+			</DropdownMenuItem>
 			<DropdownMenuItem>
 				<Link href={'/dashboard/manage-category'}>Manage Category</Link>
 			</DropdownMenuItem>
-			<DropdownMenuItem>Manage Order</DropdownMenuItem>
+			<DropdownMenuItem><Link href={'/dashboard/manage-orders'}>Manage Order</Link></DropdownMenuItem>
 		</>
 	);
 };

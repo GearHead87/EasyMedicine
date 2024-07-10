@@ -15,7 +15,7 @@ const User = () => {
 			<DropdownMenuLabel>My Account</DropdownMenuLabel>
 			<DropdownMenuSeparator />
 			{/* <DropdownMenuItem>Profile</DropdownMenuItem> */}
-			<DropdownMenuItem><Link href={'/order-details'}>Order History</Link> </DropdownMenuItem>
+			<DropdownMenuItem><Link href={'/dashboard/order-details'}>Order History</Link> </DropdownMenuItem>
 			{/* <DropdownMenuItem>Team</DropdownMenuItem> */}
 			{/* <DropdownMenuItem>Subscription</DropdownMenuItem> */}
 		</>
