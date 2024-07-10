@@ -18,6 +18,7 @@ const ProductTable = () => {
 		data: productsData,
 		error: productsError,
 		isLoading: productsLoading,
+		refetch: productRefetch
 	} = useGetProductsQuery({});
 	const {
 		data: categoriesData,
@@ -34,6 +35,7 @@ const ProductTable = () => {
 
 	const handleDelete = async (id: string) => {
 		await deleteProduct(id);
+		productRefetch()
 	};
 
 	const getCategoryName = (categoryId: string) => {
