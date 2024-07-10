@@ -20,6 +20,7 @@ import { ShoppingCartIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 const CartDropdown = () => {
 	const router = useRouter();
@@ -51,7 +52,11 @@ const CartDropdown = () => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ userId: session.user?.id, items: cartItems, totalAmount: calculateTotalPrice() }),
+				body: JSON.stringify({
+					userId: session.user?.id,
+					items: cartItems,
+					totalAmount: calculateTotalPrice(),
+				}),
 			});
 
 			if (response.ok) {
@@ -122,8 +127,8 @@ const CartDropdown = () => {
 							<span>{calculateTotalPrice()} ৳</span>
 						</div>
 						<div className="flex justify-center p-4">
-							<Button onClick={handleCheckout} className="w-full">
-								Proceed to Checkout
+							<Button className="w-full">
+								<Link href={'/checkout'}>Proceed to Checkout</Link>
 							</Button>
 						</div>
 					</>
