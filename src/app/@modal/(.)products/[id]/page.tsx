@@ -1,7 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-// import ProductDetailsModal from '@/components/ProductDetailsModal';
-import ProductDetailsPage from '@/app/products/[id]/page';
+import { useEffect, useState } from 'react';
 import ProductDetailsModal from '@/components/component/ProductDetailsModal';
 
 const ProductInterceptor = ({ params }: { params: { id: string } }) => {
@@ -21,7 +19,7 @@ const ProductInterceptor = ({ params }: { params: { id: string } }) => {
 
 	return (
 		<>
-			<ProductDetailsPage params={{ id }} />
+			{/* <ProductDetailsPage params={{ id }} /> */}
 			{showModal && <ProductDetailsModal productId={id} onClose={handleClose} />}
 		</>
 	);

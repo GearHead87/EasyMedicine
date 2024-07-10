@@ -6,7 +6,7 @@ import ProductDetails from './ProductDetails';
 const ProductDetailsModal = ({ productId, onClose }) => {
 	return (
 		<Dialog open={true} onOpenChange={onClose}>
-			<DialogContent className='max-w-xl'>
+			<DialogContent className='max-w-2xl'>
 				<ProductDetails productId={productId} />
 				<Button onClick={onClose}>Close</Button>
 			</DialogContent>
