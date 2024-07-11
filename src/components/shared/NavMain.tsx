@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import SideBar from '../component/SideBar';
 import NavBar from '../component/NavBar';
+import Footer from './Footer';
 
 type Props = {
 	children: React.ReactNode;
@@ -20,6 +21,7 @@ export default function NavMain({ children }: Props) {
 				{/* <main className="flex-1 p-4" /> */}
 				<div className="mt-10 p-4 mx-auto">{children}</div>
 			</div>
+			<Footer />
 		</div>
 	);
 }
