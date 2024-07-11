@@ -8,16 +8,22 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { toast } from 'sonner';
 
-const calculateTotalPrice = (items) => {
-	return items.reduce((total, item) => total + item.price * item.quantity, 0);
+interface Product {
+	id: string;
+	price: number;
+	quantity: number;
+}
+
+const calculateTotalPrice = (items: Product[]) => {
+	return items.reduce((total: number, item: Product) => total + item.price * item.quantity, 0);
 };
 
 const CheckoutPage = () => {
 	const cartItems = useAppSelector((state) => state?.cart?.items);
 	const dispatch = useAppDispatch();
 	const { data: session } = useSession();
-
 	const handleCheckout = async () => {
+		// @ts-ignore
 		if (!session?.user?.id) {
 			toast('You must login to place order');
 			console.error('User is not authenticated');
@@ -31,6 +37,7 @@ const CheckoutPage = () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
+					// @ts-ignore
 					userId: session.user?.id,
 					items: cartItems,
 					totalAmount: calculateTotalPrice(cartItems),

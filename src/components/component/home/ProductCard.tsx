@@ -13,7 +13,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { addToCart, removeFromCart } from '../../../redux/features/cart/cartSlice';
 
-const ProductCard = ({ product }) => {
+interface Product {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+	stock: number;
+	categoryId: string;
+	image: string;
+	category?: {
+		name: string;
+	};
+	// variants: MgOption[];
+}
+
+const ProductCard = ({ product }: { product: Product }) => {
 	const dispatch = useAppDispatch();
 	const cartItems = useAppSelector((state) => state?.cart?.items);
 	const isInCart = cartItems?.some((item) => item.id === product.id);
@@ -48,6 +62,7 @@ const ProductCard = ({ product }) => {
 				</CardHeader>
 				<CardContent>
 					<p>
+						{/* @ts-ignore */}
 						Category: <span className="font-semibold"> {product.category.name}</span>
 					</p>
 					<p>

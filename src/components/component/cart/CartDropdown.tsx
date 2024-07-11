@@ -49,53 +49,24 @@ const CartDropdown = () => {
 		return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 	};
 
-	// const handleCheckout = async () => {
-	// 	if (!session?.user?.id) {
-	// 		console.error('User is not authenticated');
-	// 		return;
-	// 	}
 
-	// 	try {
-	// 		const response = await fetch('/api/orders', {
-	// 			method: 'POST',
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 			},
-	// 			body: JSON.stringify({
-	// 				userId: session.user?.id,
-	// 				items: cartItems,
-	// 				totalAmount: calculateTotalPrice(),
-	// 			}),
-	// 		});
-
-	// 		if (response.ok) {
-	// 			const order = await response.json();
-	// 			// router.push(`/order-details/${order.id}`);
-	// 		} else {
-	// 			console.error('Failed to place order');
+	// useEffect(() => {
+	// 	const handleClickOutside = (event: React.SyntheticEvent<EventTarget>) => {
+	// 		if (dropdownRef.current && !dropdownRef?.current?.contains(event.target)) {
+	// 			dispatch(closeCartDropdown());
 	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error placing order:', error);
+	// 	};
+
+	// 	if (isOpen) {
+	// 		document.addEventListener('mousedown', handleClickOutside);
+	// 	} else {
+	// 		document.removeEventListener('mousedown', handleClickOutside);
 	// 	}
-	// };
 
-	useEffect(() => {
-		const handleClickOutside = (event) => {
-			if (dropdownRef.current && !dropdownRef?.current?.contains(event.target)) {
-				dispatch(closeCartDropdown());
-			}
-		};
-
-		if (isOpen) {
-			document.addEventListener('mousedown', handleClickOutside);
-		} else {
-			document.removeEventListener('mousedown', handleClickOutside);
-		}
-
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, [isOpen, dispatch]);
+	// 	return () => {
+	// 		document.removeEventListener('mousedown', handleClickOutside);
+	// 	};
+	// }, [isOpen, dispatch]);
 
 	return (
 		<DropdownMenu

@@ -1,12 +1,13 @@
-"use client"
+//@ts-nocheck
+'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signIn } from 'next-auth/react';
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 
 const SignInForm = () => {
-	const formSubmit = async (e) => {
+	const formSubmit = async (e: React.SyntheticEvent<EventTarget>) => {
 		e.preventDefault();
 		const form = e.target;
 		const res = await signIn('credentials', {
@@ -15,7 +16,7 @@ const SignInForm = () => {
 			redirect: true,
 			callbackUrl: '/',
 		});
-		toast("Sign in successful")
+		toast('Sign in successful');
 	};
 	return (
 		<div>

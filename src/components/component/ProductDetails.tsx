@@ -1,16 +1,16 @@
 'use client';
-import React, { useState } from 'react';
-import { useAppDispatch } from '@/redux/hooks';
-import { addToCart } from '@/redux/features/cart/cartSlice';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
-import Image from 'next/image';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { addToCart } from '@/redux/features/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hooks';
+import Image from 'next/image';
+import { useState } from 'react';
 import useSWR from 'swr';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const ProductDetails = ({ productId }) => {
+const ProductDetails = ({ productId }:{productId: string}) => {
 	const { data, error } = useSWR(productId ? `/api/products/${productId}` : null, fetcher);
 	const dispatch = useAppDispatch();
 	const [quantity, setQuantity] = useState(1);

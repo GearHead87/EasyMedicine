@@ -23,6 +23,22 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
+interface User {
+	id: string;
+	name: string;
+	email: string;
+	image: string;
+}
+
+interface Pagination {
+	totalPages: number;
+}
+
+interface UsersResponse {
+	users: User[];
+	pagination: Pagination;
+}
+
 const ManageUsers = () => {
 	const [search, setSearch] = useState('');
 	const [page, setPage] = useState(1);
@@ -34,8 +50,8 @@ const ManageUsers = () => {
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading users</div>;
 
-	const { users, pagination } = data;
-	const totalPages = pagination.totalPages;
+	const { users, pagination } = data!;
+	const totalPages = pagination?.totalPages;
 
 	const handleDelete = async (id: string) => {
 		await deleteUser(id);
@@ -64,7 +80,7 @@ const ManageUsers = () => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{users.map((user) => (
+					{users.map((user: User) => (
 						<TableRow key={user.id}>
 							<TableCell>
 								<Image
@@ -96,9 +112,10 @@ const ManageUsers = () => {
 				<PaginationContent>
 					<PaginationPrevious
 						onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-						disabled={page === 1}
+						// disabled={(page === 1)}
 					/>
 					{Array.from({ length: totalPages }, (_, index) => (
+						/* @ts-ignore */
 						<PaginationItem key={index} active={index + 1 === page}>
 							<PaginationLink onClick={() => setPage(index + 1)}>
 								{index + 1}
@@ -107,6 +124,7 @@ const ManageUsers = () => {
 					))}
 					<PaginationNext
 						onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+						/* @ts-ignore */
 						disabled={page === totalPages}
 					/>
 				</PaginationContent>

@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,14 +12,31 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
-import { cn } from '@/lib/utils';
 import { useGetCategoriesQuery } from '@/redux/services/categoriesApi';
-import {
-	useGetProductByIdQuery,
-	useGetProductsQuery,
-	useUpdateProductMutation,
-} from '@/redux/services/productApi';
-import React, { useState, useEffect } from 'react';
+import { useGetProductByIdQuery, useUpdateProductMutation } from '@/redux/services/productApi';
+import React, { useEffect, useState } from 'react';
+
+interface MgOption {
+	mg: number;
+	price: number;
+}
+
+interface Product {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+	stock: number;
+	categoryId: string;
+	variants: MgOption[];
+}
+
+type CategoryProps = {
+	id: string;
+	name: string;
+	parentId?: string;
+	subcategories: CategoryProps[];
+};
 
 const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 	const { id: productId } = params;
@@ -46,7 +64,8 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 			setMgOptions(productData?.product?.variants);
 		}
 	}, [productData]);
-	console.log('from api', productData?.product);
+
+	// console.log('from api', productData?.product);
 
 	const handleMgOptionChange = (index: number, field: string, value: number) => {
 		const newMgOptions = [...mgOptions];
@@ -87,7 +106,7 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 		if (newProductData.image) {
 			formData.append('image', newProductData.image);
 		}
-		
+
 		try {
 			// const { data } = await updateProduct({ id: productId, formData });
 			const { data } = await axiosCommon.patch(`/api/products/${productId}`, formData, {
@@ -152,7 +171,7 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 					<div>
 						<Label htmlFor="Category ID">Category</Label>
 						<Select
-                            // onOpenChange={}
+							// onOpenChange={}
 							onValueChange={(value) => value && setCategoryId(value)}
 							value={categoryId}
 						>
@@ -169,11 +188,8 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 										Error loading categories
 									</SelectItem>
 								) : (
-									categories?.map((category) => (
-										<SelectItem
-											key={category.id}
-											value={category.id}
-										>
+									categories?.map((category: CategoryProps) => (
+										<SelectItem key={category.id} value={category.id}>
 											{category.name}
 										</SelectItem>
 									))

@@ -11,6 +11,20 @@ import {
 	CarouselPrevious,
 } from '@/components/ui/carousel';
 
+interface Product {
+	id: string;
+	name: string;
+	description: string;
+	price: number;
+	stock: number;
+	categoryId: string;
+	image: string;
+	category?: {
+		name: string;
+	};
+	// variants: MgOption[];
+}
+
 const ProductsPage = () => {
 	const { data, error, isLoading } = useGetProductsQuery({});
 
@@ -24,7 +38,7 @@ const ProductsPage = () => {
 		<Carousel className="w-full max-w-sm md:max-w-2xl lg:max-w-none">
 			<CarouselContent className="-ml-1">
 				{/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"> */}
-				{products?.map((product: { id: React.Key | null | undefined },index) => (
+				{products?.map((product: Product, index) => (
 					<CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
 						<ProductCard key={product.id} product={product} />
 					</CarouselItem>

@@ -8,7 +8,7 @@ export const userApi = createApi({
 		getUsers: builder.query({
 			query: ({ search = '', page = 1, limit = 10 }) =>
 				`users?search=${search}&page=${page}&limit=${limit}`,
-			transformResponse: (response) => ({
+			transformResponse: (response: { users: []; pagination: {totalPages:number} }) => ({
 				users: response.users,
 				pagination: response.pagination,
 			}),
@@ -22,4 +22,4 @@ export const userApi = createApi({
 	}),
 });
 
-export const { useGetUsersQuery, useDeleteUserMutation  } = userApi;
+export const { useGetUsersQuery, useDeleteUserMutation } = userApi;

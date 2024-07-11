@@ -56,7 +56,7 @@ const NavBar = ({ toggleSidebar }: Props) => {
 							Loading...
 						</button>
 					) : data?.status === 'authenticated' ? (
-						<Dashboard data={data} />
+						<Dashboard />
 					) : (
 						<Link
 							href={'/signin'}

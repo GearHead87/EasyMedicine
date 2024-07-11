@@ -20,11 +20,12 @@ export async function GET(req: NextRequest) {
 			: {};
 
 		const users = await prisma.user.findMany({
+			// @ts-ignore
 			where,
 			skip,
 			take: limit,
 		});
-
+		// @ts-ignore
 		const totalUsers = await prisma.user.count({ where });
 
 		return NextResponse.json({

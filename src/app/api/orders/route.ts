@@ -3,6 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
+interface ItemsProps {
+	id: string
+	quantity: number
+	price: number
+}
+
 export async function POST(req: NextRequest) {
 	try {
 		const { userId, items, totalAmount } = await req.json();
@@ -14,7 +20,7 @@ export async function POST(req: NextRequest) {
 				status: 'PENDING',
 				// shippingAddressId,
 				orderItems: {
-					create: items.map((item) => ({
+					create: items.map((item:ItemsProps) => ({
 						productId: item.id,
 						quantity: item.quantity,
 						price: item.price,
@@ -28,7 +34,7 @@ export async function POST(req: NextRequest) {
 
 		// Decrease product stock
 		await Promise.all(
-			items.map(async (item) => {
+			items.map(async (item:ItemsProps) => {
 				await prisma.product.update({
 					where: { id: item.id },
 					data: { stock: { decrement: item.quantity } },

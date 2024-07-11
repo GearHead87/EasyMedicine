@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -11,6 +11,21 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
+
+interface OrderProps {
+	id: string;
+	status: string;
+	totalAmount: number;
+	orderItems: []
+}
+interface ItemsProps {
+	id: string;
+	quantity: number;
+	price: number;
+	product: {
+		name: string
+	}
+}
 
 const AdminOrdersPage = () => {
 	const { data: session, status } = useSession();
@@ -34,7 +49,7 @@ const AdminOrdersPage = () => {
 		fetchOrders();
 	}, []);
 
-	const handleChangeStatus = async (orderId, status) => {
+	const handleChangeStatus = async (orderId: string, status: string) => {
 		try {
 			const response = await fetch(`/api/orders/${orderId}`, {
 				method: 'POST',
@@ -45,10 +60,10 @@ const AdminOrdersPage = () => {
 			});
 			if (response.ok) {
 				const updatedOrder = await response.json();
-				const updatedOrders = orders.map((order) =>
+				const updatedOrders = orders.map((order: OrderProps) =>
 					order.id === updatedOrder.id ? updatedOrder : order
 				);
-				setOrders(updatedOrders);
+				setOrders(updatedOrders as never);
 			} else {
 				console.error('Failed to update order status');
 			}
@@ -80,7 +95,7 @@ const AdminOrdersPage = () => {
 					<CardTitle>Orders List</CardTitle>
 				</CardHeader>
 				<CardContent>
-					{orders.map((order) => (
+					{orders.map((order: OrderProps) => (
 						<Card key={order.id} className="mb-4">
 							<CardHeader>
 								<CardTitle>Order Details</CardTitle>
@@ -98,7 +113,7 @@ const AdminOrdersPage = () => {
 										</TableRow>
 									</TableHeader>
 									<TableBody>
-										{order.orderItems.map((item) => (
+										{order.orderItems.map((item: ItemsProps) => (
 											<TableRow key={item.id}>
 												<TableCell>{item?.product?.name}</TableCell>
 												<TableCell>{item.quantity}</TableCell>

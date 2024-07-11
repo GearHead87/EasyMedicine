@@ -155,7 +155,7 @@ const AddProductPage = () => {
 								Error loading categories
 							</SelectItem>
 						) : (
-							categories?.map((category) => (
+							categories?.map((category: { id: string; name: string }) => (
 								<SelectItem key={category.id} value={category.id}>
 									{category.name}
 								</SelectItem>

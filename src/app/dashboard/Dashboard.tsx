@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import Admin from '@/components/component/dashboard/Admin';
 import User from '@/components/component/dashboard/User';
@@ -7,13 +8,12 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
-	DropdownMenuTrigger
+	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { signOut, useSession } from 'next-auth/react';
 
 const Dashboard = () => {
-	
 	const { data: session } = useSession();
 	return (
 		<>
@@ -22,12 +22,12 @@ const Dashboard = () => {
 					Dashboard
 				</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<Admin />
-					<User />
-					<DropdownMenuSeparator />
-					<p>Conditional</p>
-					{session?.user?.role === 'USER' && <User />}
 					{session?.user?.role === 'ADMIN' && <Admin />}
+					{session?.user?.role === 'USER' && <User />}
+					{/* <Admin />
+					<User /> */}
+					<DropdownMenuSeparator />
+					{/* <p>Conditional</p> */}
 					<DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
