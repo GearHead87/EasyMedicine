@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-// pages/api/products.ts
 export async function GET(req: NextRequest) {
 	try {
 		// Extract pagination parameters from the query string
 		const { searchParams } = new URL(req.url);
 		const page = searchParams.get('page') || '1';
 		const limit = searchParams.get('limit') || '10';
+		const categoryId = searchParams.get('categoryId');
 
 		// Convert query string values to integers
 		const pageNumber = parseInt(page);
@@ -16,8 +16,12 @@ export async function GET(req: NextRequest) {
 		// Calculate the number of items to skip
 		const skip = (pageNumber - 1) * limitNumber;
 
+		// Define the where clause based on the categoryId
+		const where = categoryId ? { categoryId } : { };
+
 		// Fetch products from the database
 		const products = await prisma.product.findMany({
+			where,
 			skip,
 			take: limitNumber,
 			include: {
@@ -27,7 +31,10 @@ export async function GET(req: NextRequest) {
 		});
 
 		// Get the total count of products
-		const totalProducts = await prisma.product.count();
+		const totalProducts = await prisma.product.count({ where });
+
+		// // Get the total count of products
+		// const totalProducts = await prisma.product.count();
 
 		// Return the products and pagination info
 		return NextResponse.json({

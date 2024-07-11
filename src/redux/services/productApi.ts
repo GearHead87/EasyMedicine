@@ -12,6 +12,12 @@ export const productApi = createApi({
 				pagination: response.pagination,
 			}),
 		}),
+		getProductsByCategory: builder.query({
+			query: (categoryId) => `products?categoryId=${categoryId}`,
+			transformResponse: (response: { products: any[] }) => ({
+				products: response.products,
+			}),
+		}),
 		deleteProduct: builder.mutation({
 			query: (id) => ({
 				url: `products/${id}`,
@@ -22,4 +28,4 @@ export const productApi = createApi({
 	}),
 });
 
-export const { useGetProductsQuery, useDeleteProductMutation } = productApi;
+export const { useGetProductsQuery, useDeleteProductMutation, useGetProductsByCategoryQuery } = productApi;

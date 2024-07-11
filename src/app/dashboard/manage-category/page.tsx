@@ -2,8 +2,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useEffect, useState } from 'react';
-import useAxiosCommon from '@/hooks/useAxiosCommon';
 import {
 	Select,
 	SelectContent,
@@ -11,34 +9,27 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { cn } from '@/lib/utils';
+import {
+	useAddCategoryMutation,
+	useDeleteCategoryMutation,
+	useGetCategoriesQuery,
+} from '@/redux/services/categoriesApi';
+import { useState } from 'react';
 
-type Category = {
+type CategoryProps = {
 	id: string;
 	name: string;
 	parentId?: string;
-	subcategories: Category[];
+	subcategories: CategoryProps[];
 };
 
 const CategoryPage = () => {
-	const [categories, setCategories] = useState<Category[]>([]);
+	const { data: categories = [], isLoading, error } = useGetCategoriesQuery({});
+	const [addCategory] = useAddCategoryMutation();
+	const [deleteCategory] = useDeleteCategoryMutation();
+
 	const [categoryName, setCategoryName] = useState('');
 	const [parentId, setParentId] = useState<string | null>(null);
-
-	const axiosCommon = useAxiosCommon();
-
-	useEffect(() => {
-		fetchCategories();
-	}, []);
-
-	const fetchCategories = async () => {
-		try {
-			const { data } = await axiosCommon.get('/api/categories');
-			setCategories(data);
-		} catch (e) {
-			console.error(e);
-		}
-	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -49,8 +40,7 @@ const CategoryPage = () => {
 		};
 
 		try {
-			const { data } = await axiosCommon.post('/api/categories', categoryData);
-			fetchCategories(); // Refresh categories after adding
+			await addCategory(categoryData).unwrap();
 			setCategoryName('');
 			setParentId(null);
 		} catch (e) {
@@ -60,14 +50,13 @@ const CategoryPage = () => {
 
 	const handleDelete = async (categoryId: string) => {
 		try {
-			await axiosCommon.delete('/api/categories', { data: { id: categoryId } });
-			fetchCategories(); // Refresh categories after deletion
+			await deleteCategory(categoryId).unwrap();
 		} catch (e) {
 			console.error(e);
 		}
 	};
 
-	const renderCategories = (categories: Category[]) => {
+	const renderCategories = (categories: CategoryProps[]) => {
 		return categories.map((category) => (
 			<div key={category.id} className="mb-2 space-y-2">
 				<p className="font-semibold flex justify-between items-center">
@@ -92,7 +81,9 @@ const CategoryPage = () => {
 			<h1 className="text-2xl font-bold mb-4">Categories</h1>
 
 			<div className="mb-4">
-				{renderCategories(categories.filter((category) => !category.parentId))}
+				{renderCategories(
+					categories.filter((category: CategoryProps) => !category.parentId)
+				)}
 			</div>
 
 			<form onSubmit={handleSubmit}>
@@ -113,14 +104,14 @@ const CategoryPage = () => {
 						value={parentId || ''}
 						onValueChange={(value) => setParentId(value || null)}
 					>
-						<SelectTrigger >
+						<SelectTrigger>
 							<SelectValue placeholder="None" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectItem value="None">None</SelectItem>
 							{categories
-								.filter((category) => !category.parentId)
-								.map((category) => (
+								.filter((category: CategoryProps) => !category.parentId)
+								.map((category: CategoryProps) => (
 									<SelectItem key={category.id} value={category.id}>
 										{category.name}
 									</SelectItem>
