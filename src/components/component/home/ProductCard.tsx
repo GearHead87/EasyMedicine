@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
 
 	return (
 		<Card className={`w-full mx-auto max-w-lg ${isOutOfStock ? 'opacity-50' : ''}`}>
-			<Link href={`products/${product.id}`}>
+			<Link href={`/products/${product.id}`}>
 				<CardHeader>
 					<Image src={product.image} alt="Product" className='rounded-lg object-cover w-80 h-80' width={500} height={500} />
 					<CardTitle>{product.name}</CardTitle>
@@ -39,6 +39,7 @@ const ProductCard = ({ product }) => {
 				</CardHeader>
 				<CardContent>
 					<p>Category: <span className='font-semibold'> {product.category.name}</span></p>
+					<p>Stock: <span className='font-semibold'> {product.stock}</span></p>
 					<p>Price: <span className='font-semibold'>{product.price} ৳</span></p>
 				</CardContent>
 			</Link>
