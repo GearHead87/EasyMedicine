@@ -1,12 +1,10 @@
 import { imageUpload } from '@/lib/imageUpload';
 import prisma from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function POST(req: NextRequest) {
 	try {
 		const formData = await req.formData();
-		console.log('api formdata', formData);
 
 		const name = formData.get('name') as string;
 		const description = formData.get('description') as string;

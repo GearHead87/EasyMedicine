@@ -12,12 +12,19 @@ export const productApi = createApi({
 				pagination: response.pagination,
 			}),
 		}),
+		getProductById: builder.query({
+			query: (id) => `products/${id}`,
+			transformResponse: (response: { product: any[] }) => ({
+				product: response.product,
+			}), // Adjust transformation as needed
+		}),
 		getProductsByCategory: builder.query({
 			query: (categoryId) => `products?categoryId=${categoryId}`,
 			transformResponse: (response: { products: any[] }) => ({
 				products: response.products,
 			}),
 		}),
+
 		deleteProduct: builder.mutation({
 			query: (id) => ({
 				url: `products/${id}`,
@@ -25,7 +32,24 @@ export const productApi = createApi({
 			}),
 			invalidatesTags: [{ type: 'products', id: 'LIST' }],
 		}),
+		updateProduct: builder.mutation({
+			query: ({ id, formData }) => {
+				console.log(...formData);
+				return {
+					url: `products/${id}`,
+					method: 'PATCH',
+					body: formData,
+					headers: { 'Content-Type': 'multipart/form-data' },
+				};
+			},
+		}),
 	}),
 });
 
-export const { useGetProductsQuery, useDeleteProductMutation, useGetProductsByCategoryQuery } = productApi;
+export const {
+	useGetProductsQuery,
+	useDeleteProductMutation,
+	useGetProductsByCategoryQuery,
+	useUpdateProductMutation,
+	useGetProductByIdQuery,
+} = productApi;

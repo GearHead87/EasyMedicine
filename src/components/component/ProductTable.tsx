@@ -12,6 +12,7 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const ProductTable = () => {
 	const {
@@ -66,7 +67,7 @@ const ProductTable = () => {
 						<TableCell>{product.stock}</TableCell>
 						<TableCell className="text-right">
 							<Button variant="ghost" onClick={() => console.log('Edit', product.id)}>
-								Edit
+								<Link href={`/dashboard/manage-product/${product.id}`}>Edit</Link>
 							</Button>
 							<Button variant="destructive" onClick={() => handleDelete(product.id)}>
 								Delete
