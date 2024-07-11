@@ -18,13 +18,25 @@ export const productApi = createApi({
 				product: response.product,
 			}), // Adjust transformation as needed
 		}),
+		// getProductsByCategory: builder.query({
+		// 	query: ({ categoryId, page = 1, limit = 5 }) =>
+		// 		`products?categoryId=${categoryId}page=${page}&limit=${limit}`,
+		// 	transformResponse: (response: { products: any[] }) => ({
+		// 		products: response.products,
+		// 	}),
+		// }),
 		getProductsByCategory: builder.query({
-			query: (categoryId) => `products?categoryId=${categoryId}`,
-			transformResponse: (response: { products: any[] }) => ({
+			query: ({ categoryId, page = 1, limit = 5 }) =>
+				`products?categoryId=${categoryId}&page=${page}&limit=${limit}`,
+			transformResponse: (response: {
+				products: any[];
+				pagination: { total: number; page: number; limit: number; totalPages: number };
+			}) => ({
 				products: response.products,
+				pagination: response.pagination,
 			}),
 		}),
-
+		
 		deleteProduct: builder.mutation({
 			query: (id) => ({
 				url: `products/${id}`,

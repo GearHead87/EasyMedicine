@@ -42,7 +42,7 @@ const ProductDetails = ({ productId }) => {
 				<Image
 					src={product.image}
 					alt={product.name}
-					className="rounded-lg"
+					className="object-cover rounded-lg"
 					width={300}
 					height={300}
 				/>

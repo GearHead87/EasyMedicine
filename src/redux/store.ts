@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { productApi } from './services/productApi';
 import { categoriesApi } from './services/categoriesApi';
+import { userApi } from './services/userApi';
 import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	cartDropdown: cartDropdownReducer,
 	[productApi.reducerPath]: productApi.reducer,
 	[categoriesApi.reducerPath]: categoriesApi.reducer,
+	[userApi.reducerPath]: userApi.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -28,7 +30,8 @@ export const store = configureStore({
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ serializableCheck: false }).concat(
 			productApi.middleware,
-			categoriesApi.middleware
+			categoriesApi.middleware,
+			userApi.middleware
 		),
 });
 
