@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import cartReducer from './features/cart/cartSlice';
+import cartDropdownReducer from './features/cartDropdown/cartDropdownSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -14,6 +15,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
 	cart: cartReducer,
+	cartDropdown: cartDropdownReducer,
 	[productApi.reducerPath]: productApi.reducer,
 	[categoriesApi.reducerPath]: categoriesApi.reducer,
 });

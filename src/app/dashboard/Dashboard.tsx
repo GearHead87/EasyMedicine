@@ -1,22 +1,20 @@
 'use client';
-import React from 'react';
+import Admin from '@/components/component/dashboard/Admin';
+import User from '@/components/component/dashboard/User';
+import { buttonVariants } from '@/components/ui/button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuTrigger,
+	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import User from '@/components/component/dashboard/User';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-import Admin from '@/components/component/dashboard/Admin';
 import { signOut, useSession } from 'next-auth/react';
 
 const Dashboard = () => {
+	
 	const { data: session } = useSession();
-	console.log(session);
 	return (
 		<>
 			<DropdownMenu>

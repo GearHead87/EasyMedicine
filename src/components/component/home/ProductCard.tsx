@@ -1,4 +1,4 @@
-import React from 'react';
+import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardContent,
@@ -7,16 +7,15 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart } from '../../../redux/features/cart/cartSlice';
+import { openCartDropdown } from '@/redux/features/cartDropdown/cartDropdownSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import Image from 'next/image';
-import CartDropdown from '../cart/CartDropdown';
 import Link from 'next/link';
+import { addToCart, removeFromCart } from '../../../redux/features/cart/cartSlice';
 
 const ProductCard = ({ product }) => {
-	const dispatch = useDispatch();
-	const cartItems = useSelector((state) => state?.cart?.items);
+	const dispatch = useAppDispatch();
+	const cartItems = useAppSelector((state) => state?.cart?.items);
 	const isInCart = cartItems?.some((item) => item.id === product.id);
 	const isOutOfStock = product.stock === 0;
 	// console.log(product);
@@ -29,18 +28,34 @@ const ProductCard = ({ product }) => {
 		dispatch(removeFromCart(product));
 	};
 
+	const handleViewCart = () => {
+		dispatch(openCartDropdown());
+	};
+
 	return (
 		<Card className={`w-full mx-auto max-w-lg ${isOutOfStock ? 'opacity-50' : ''}`}>
 			<Link href={`/products/${product.id}`}>
 				<CardHeader>
-					<Image src={product.image} alt="Product" className='rounded-lg object-cover w-80 h-80' width={500} height={500} />
+					<Image
+						src={product.image}
+						alt="Product"
+						className="rounded-lg object-cover w-80 h-80"
+						width={500}
+						height={500}
+					/>
 					<CardTitle>{product.name}</CardTitle>
 					<CardDescription>{product.description}</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<p>Category: <span className='font-semibold'> {product.category.name}</span></p>
-					<p>Stock: <span className='font-semibold'> {product.stock}</span></p>
-					<p>Price: <span className='font-semibold'>{product.price} ৳</span></p>
+					<p>
+						Category: <span className="font-semibold"> {product.category.name}</span>
+					</p>
+					<p>
+						Stock: <span className="font-semibold"> {product.stock}</span>
+					</p>
+					<p>
+						Price: <span className="font-semibold">{product.price} ৳</span>
+					</p>
 				</CardContent>
 			</Link>
 			<CardFooter>
@@ -49,7 +64,9 @@ const ProductCard = ({ product }) => {
 						Out of Stock
 					</Button>
 				) : isInCart ? (
-					<Button variant="default">View Cart(notworking)</Button>
+					<Button variant="default" onClick={handleViewCart}>
+						View Cart
+					</Button>
 				) : (
 					<Button variant="default" onClick={handleAddToCart}>
 						Add to Cart

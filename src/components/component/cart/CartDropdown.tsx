@@ -1,11 +1,4 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-	removeFromCart,
-	increaseQuantity,
-	decreaseQuantity,
-	CartItem,
-} from '@/redux/features/cart/cartSlice';
+import { Button } from '@/components/ui/button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -14,19 +7,31 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
+import {
+	CartItem,
+	decreaseQuantity,
+	increaseQuantity,
+	removeFromCart,
+} from '@/redux/features/cart/cartSlice';
+import {
+	closeCartDropdown,
+	openCartDropdown,
+} from '@/redux/features/cartDropdown/cartDropdownSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { ShoppingCartIcon } from 'lucide-react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 
 const CartDropdown = () => {
 	const router = useRouter();
+	const isOpen = useAppSelector((state) => state.cartDropdown.isOpen);
 	const dispatch = useAppDispatch();
 	const cartItems = useAppSelector((state) => state?.cart?.items);
 	const { data: session } = useSession();
+	const dropdownRef = useRef(null);
 
 	const handleRemove = (id: string) => {
 		dispatch(removeFromCart({ id }));
@@ -40,42 +45,65 @@ const CartDropdown = () => {
 		dispatch(decreaseQuantity(item));
 	};
 
-	const handleCheckout = async () => {
-		if (!session?.user?.id) {
-			console.error('User is not authenticated');
-			return;
-		}
-
-		try {
-			const response = await fetch('/api/orders', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					userId: session.user?.id,
-					items: cartItems,
-					totalAmount: calculateTotalPrice(),
-				}),
-			});
-
-			if (response.ok) {
-				const order = await response.json();
-				// router.push(`/order-details/${order.id}`);
-			} else {
-				console.error('Failed to place order');
-			}
-		} catch (error) {
-			console.error('Error placing order:', error);
-		}
-	};
-
 	const calculateTotalPrice = () => {
 		return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 	};
 
+	// const handleCheckout = async () => {
+	// 	if (!session?.user?.id) {
+	// 		console.error('User is not authenticated');
+	// 		return;
+	// 	}
+
+	// 	try {
+	// 		const response = await fetch('/api/orders', {
+	// 			method: 'POST',
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 			body: JSON.stringify({
+	// 				userId: session.user?.id,
+	// 				items: cartItems,
+	// 				totalAmount: calculateTotalPrice(),
+	// 			}),
+	// 		});
+
+	// 		if (response.ok) {
+	// 			const order = await response.json();
+	// 			// router.push(`/order-details/${order.id}`);
+	// 		} else {
+	// 			console.error('Failed to place order');
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Error placing order:', error);
+	// 	}
+	// };
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef?.current?.contains(event.target)) {
+				dispatch(closeCartDropdown());
+			}
+		};
+
+		if (isOpen) {
+			document.addEventListener('mousedown', handleClickOutside);
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [isOpen, dispatch]);
+
 	return (
-		<DropdownMenu>
+		<DropdownMenu
+			open={isOpen}
+			onOpenChange={(open) =>
+				open ? dispatch(openCartDropdown()) : dispatch(closeCartDropdown())
+			}
+		>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline">
 					{/* Cart ({cartItems?.length}) */}
