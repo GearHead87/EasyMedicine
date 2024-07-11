@@ -1,6 +1,12 @@
 # EasyMedicine
 
 [Livelink](https://easy-medicine.vercel.app/)
+
+```plaintext
+admin-email: hosanulislam87@gmail.com
+admin-password: 123456
+```
+
 This repository contains the code for a Next.js application with a backend powered by Prisma and PostgreSQL. The application includes user management, product management with pagination, and category-based product filtering.
 
 Set up the environment variables:

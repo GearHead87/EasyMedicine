@@ -4,9 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 
 const SignInForm = () => {
+	const searchParams = useSearchParams();
+	const path = searchParams.get('redirect');
+
 	const formSubmit = async (e: React.SyntheticEvent<EventTarget>) => {
 		e.preventDefault();
 		const form = e.target;
@@ -14,7 +18,7 @@ const SignInForm = () => {
 			email: form.email.value,
 			password: form.password.value,
 			redirect: true,
-			callbackUrl: '/',
+			callbackUrl: path ? path : '/',
 		});
 		toast('Sign in successful');
 	};
