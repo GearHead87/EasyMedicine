@@ -28,19 +28,19 @@ const NavBar = ({ toggleSidebar }: Props) => {
 					</Link>
 				</div>
 				<form className="flex-1 ml-auto">
-					<div className="relative">
+					{/* <div className="relative">
 						<SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							type="search"
 							placeholder="Search Your medicine / ঔষধ ও পণ্য সার্চ করুন"
 							className="pl-8 sm:w-[300px] md:w-[400px] lg:w-[500px]"
 						/>
-					</div>
+					</div> */}
 				</form>
 				<div className="flex items-center ml-4 space-x-4">
 					<div className="flex items-center">
 						<MapPinIcon className="w-6 h-6 text-muted-foreground" />
-						<span className="ml-1 text-sm">Sirajganj</span>
+						<span className="ml-1 text-sm">Chattogram</span>
 					</div>
 					{data?.status === 'loading' ? (
 						<Button variant="ghost" size="icon" className="relative" disabled>
