@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
 import { useGetCategoriesQuery } from '@/redux/services/categoriesApi';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 const AddProductPage = () => {
 	const [productName, setProductName] = useState('');
@@ -75,6 +76,7 @@ const AddProductPage = () => {
 			const { data } = await axiosCommon.post('/api/product', formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
+			toast("Product Added Successfully")
 			console.log(data);
 		} catch (e) {
 			console.log(e);

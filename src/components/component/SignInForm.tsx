@@ -42,7 +42,7 @@ const SignInForm = () => {
 					/>
 				</div>
 				<Button type="submit" className="w-full">
-					Register
+					Sign in
 				</Button>
 			</form>
 		</div>

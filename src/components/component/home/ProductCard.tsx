@@ -58,7 +58,11 @@ const ProductCard = ({ product }: { product: Product }) => {
 						height={500}
 					/>
 					<CardTitle>{product.name}</CardTitle>
-					<CardDescription>{product.description}</CardDescription>
+					<CardDescription>
+						{product.description.length > 100
+							? `${product.description.substring(0, 100)}...`
+							: product.description}
+					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<p>
