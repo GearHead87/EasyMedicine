@@ -20,9 +20,10 @@ const AddProductPage = () => {
 	const [price, setPrice] = useState(0);
 	const [stock, setStock] = useState(0);
 	const [categoryId, setCategoryId] = useState('');
-	const [mgOptions, setMgOptions] = useState<Array<{ mg: number; price: number }>>([
-		{ mg: 0, price: 0 },
-	]);
+	const [mgOptions, setMgOptions] = useState<Array<{ mg: number; price: number }>>([]);
+	// const [mgOptions, setMgOptions] = useState<Array<{ mg: number; price: number }>>([
+	// 	{ mg: 0, price: 0 },
+	// ]);
 	const [image, setImage] = useState<File | null>(null);
 
 	const { data: categories, error, isLoading } = useGetCategoriesQuery({});
@@ -140,7 +141,7 @@ const AddProductPage = () => {
 
 			<div>
 				<Label htmlFor="Category ID">Category</Label>
-				<Select onValueChange={(value) => setCategoryId(value)}>
+				<Select onValueChange={(value) => setCategoryId(value)} required>
 					<SelectTrigger>
 						<SelectValue placeholder="Select a category" />
 					</SelectTrigger>

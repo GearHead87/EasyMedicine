@@ -43,7 +43,7 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 			setPrice(productData?.product?.price);
 			setStock(productData?.product?.stock);
 			setCategoryId(productData?.product?.categoryId);
-			// setMgOptions(productData?.product?.variants);
+			setMgOptions(productData?.product?.variants);
 		}
 	}, [productData]);
 	console.log('from api', productData?.product);
