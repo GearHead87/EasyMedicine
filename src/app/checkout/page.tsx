@@ -19,6 +19,7 @@ const CheckoutPage = () => {
 
 	const handleCheckout = async () => {
 		if (!session?.user?.id) {
+			toast('You must login to place order');
 			console.error('User is not authenticated');
 			return;
 		}
@@ -40,7 +41,6 @@ const CheckoutPage = () => {
 				const order = await response.json();
 				toast('Order Placed Successfully');
 				dispatch(emptyCart());
-				// router.push(`/order-details/${order.id}`);
 			} else {
 				console.error('Failed to place order');
 			}
@@ -101,9 +101,15 @@ const CheckoutPage = () => {
 					</select>
 				</CardContent>
 			</Card>
-			<Button onClick={handleCheckout} className="w-full">
-				Place Order
-			</Button>
+			{cartItems.length === 0 ? (
+				<Button className="w-full" disabled>
+					Place Order
+				</Button>
+			) : (
+				<Button onClick={handleCheckout} className="w-full">
+					Place Order
+				</Button>
+			)}
 		</div>
 	);
 };
