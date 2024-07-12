@@ -14,7 +14,9 @@ import { Textarea } from '@/components/ui/textarea';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
 import { useGetCategoriesQuery } from '@/redux/services/categoriesApi';
 import { useGetProductByIdQuery, useUpdateProductMutation } from '@/redux/services/productApi';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 interface MgOption {
 	mg: number;
@@ -39,6 +41,7 @@ type CategoryProps = {
 };
 
 const UpdateProductPage = ({ params }: { params: { id: string } }) => {
+	const { data: session, status } = useSession();
 	const { id: productId } = params;
 	const { data: productData, isLoading: isProductLoading } = useGetProductByIdQuery(productId);
 	const [updateProduct] = useUpdateProductMutation();
@@ -112,11 +115,20 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 			const { data } = await axiosCommon.patch(`/api/products/${productId}`, formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
+			toast("Product Updated")
 			console.log(data);
 		} catch (e) {
 			console.log(e);
 		}
 	};
+
+	if (status === 'loading') {
+		return <div>Loading...</div>;
+	}
+
+	if (!session || session?.user?.role !== 'ADMIN') {
+		return <div>Unauthorized access.</div>;
+	}
 
 	return (
 		<form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white shadow-md rounded">

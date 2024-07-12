@@ -14,13 +14,19 @@ const SignInForm = () => {
 	const formSubmit = async (e: React.SyntheticEvent<EventTarget>) => {
 		e.preventDefault();
 		const form = e.target;
-		const res = await signIn('credentials', {
-			email: form.email.value,
-			password: form.password.value,
-			redirect: true,
-			callbackUrl: path ? path : '/',
-		});
-		toast('Sign in successful');
+		try{
+			const res = await signIn('credentials', {
+				email: form.email.value,
+				password: form.password.value,
+				redirect: true,
+				callbackUrl: path ? path : '/',
+			});
+			toast('Sign in successful');
+		}
+		catch(e){
+			toast("Credentials Incorrect")
+			console.log(e);
+		}
 	};
 	return (
 		<div>

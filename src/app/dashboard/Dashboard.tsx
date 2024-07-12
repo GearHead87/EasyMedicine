@@ -14,7 +14,11 @@ import { cn } from '@/lib/utils';
 import { signOut, useSession } from 'next-auth/react';
 
 const Dashboard = () => {
-	const { data: session } = useSession();
+	const { data: session, status } = useSession();
+	
+	if (status === 'loading') {
+		return <div>Loading...</div>;
+	}
 	return (
 		<>
 			<DropdownMenu>

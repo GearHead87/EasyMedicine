@@ -51,8 +51,6 @@ const OrderDetails = () => {
 		fetchOrders();
 	}, [session]);
 
-	console.log(orders);
-
 	if (status === 'loading') {
 		return <div>Loading...</div>;
 	}

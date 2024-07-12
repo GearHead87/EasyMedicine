@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,6 +12,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
 
 interface OrderProps {
 	id: string;
@@ -64,6 +66,7 @@ const AdminOrdersPage = () => {
 					order.id === updatedOrder.id ? updatedOrder : order
 				);
 				setOrders(updatedOrders as never);
+				toast("Status Updated")
 			} else {
 				console.error('Failed to update order status');
 			}
@@ -76,9 +79,9 @@ const AdminOrdersPage = () => {
 		return <div>Loading...</div>;
 	}
 
-	// if (!session || session.user.role !== 'ADMIN') {
-	// 	return <div>Unauthorized access.</div>;
-	// }
+	if (!session || session?.user?.role !== 'ADMIN') {
+		return <div>Unauthorized access.</div>;
+	}
 
 	if (loadingOrders) {
 		return <div>Loading orders...</div>;

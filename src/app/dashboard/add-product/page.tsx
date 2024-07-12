@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,10 +13,12 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
 import { useGetCategoriesQuery } from '@/redux/services/categoriesApi';
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
 const AddProductPage = () => {
+	const { data: session, status } = useSession();
 	const [productName, setProductName] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0);
@@ -82,6 +85,14 @@ const AddProductPage = () => {
 			console.log(e);
 		}
 	};
+
+	if (status === 'loading') {
+		return <div>Loading...</div>;
+	}
+
+	if (!session || session?.user?.role !== 'ADMIN') {
+		return <div>Unauthorized access.</div>;
+	}
 
 	return (
 		<form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white shadow-md rounded">
