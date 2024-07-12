@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
 		const page = searchParams.get('page') || '1';
 		const limit = searchParams.get('limit') || '10';
 		const categoryId = searchParams.get('categoryId');
+		const searchQuery = searchParams.get('search') || '';
 
 		// Convert query string values to integers
 		const pageNumber = parseInt(page);
@@ -16,8 +17,19 @@ export async function GET(req: NextRequest) {
 		// Calculate the number of items to skip
 		const skip = (pageNumber - 1) * limitNumber;
 
-		// Define the where clause based on the categoryId
-		const where = categoryId ? { categoryId } : { };
+		// // Define the where clause based on the categoryId
+		// const where = categoryId ? { categoryId } : { };
+
+		// Define the where clause based on the categoryId and searchQuery
+		const where = {
+			...(categoryId && { categoryId }),
+			...(searchQuery && {
+				name: {
+					contains: searchQuery,
+					mode: 'insensitive',
+				},
+			}),
+		};
 
 		// Fetch products from the database
 		const products = await prisma.product.findMany({
@@ -32,9 +44,6 @@ export async function GET(req: NextRequest) {
 
 		// Get the total count of products
 		const totalProducts = await prisma.product.count({ where });
-
-		// // Get the total count of products
-		// const totalProducts = await prisma.product.count();
 
 		// Return the products and pagination info
 		return NextResponse.json({

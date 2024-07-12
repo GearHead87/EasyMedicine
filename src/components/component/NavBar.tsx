@@ -5,8 +5,9 @@ import { cn } from '@/lib/utils';
 import { HospitalIcon, MapPinIcon, MenuIcon, SearchIcon, ShoppingCartIcon } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import CartDropdown from './cart/CartDropdown';
+import { useRouter } from 'next/navigation';
 
 type Props = {
 	toggleSidebar: MouseEventHandler<HTMLButtonElement>;
@@ -14,6 +15,13 @@ type Props = {
 
 const NavBar = ({ toggleSidebar }: Props) => {
 	const data = useSession();
+	const router = useRouter();
+	const [search, setSearch] = useState('');
+
+	const handleSearch = (e: React.FormEvent) => {
+		e.preventDefault();
+		router.push(`/products?page=1&search=${search}`);
+	};
 	// console.log(data);
 	return (
 		<>
@@ -27,15 +35,17 @@ const NavBar = ({ toggleSidebar }: Props) => {
 						Medicine
 					</Link>
 				</div>
-				<form className="flex-1 ml-auto">
-					{/* <div className="relative">
+				<form className="mx-auto" onSubmit={handleSearch}>
+					<div className="relative">
 						<SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 						<Input
 							type="search"
 							placeholder="Search Your medicine / ঔষধ ও পণ্য সার্চ করুন"
 							className="pl-8 sm:w-[300px] md:w-[400px] lg:w-[500px]"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
 						/>
-					</div> */}
+					</div>
 				</form>
 				<div className="flex items-center ml-4 space-x-4">
 					<div className="flex items-center">

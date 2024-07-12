@@ -5,8 +5,16 @@ export const productApi = createApi({
 	tagTypes: ['products'],
 	baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
 	endpoints: (builder) => ({
+		// getProducts: builder.query({
+		// 	query: ({ page = 1, limit = 5 }) => `products?page=${page}&limit=${limit}`,
+		// 	transformResponse: (response: { products: any[]; pagination: any }) => ({
+		// 		products: response.products,
+		// 		pagination: response.pagination,
+		// 	}),
+		// }),
 		getProducts: builder.query({
-			query: ({ page = 1, limit = 5 }) => `products?page=${page}&limit=${limit}`,
+			query: ({ page = 1, limit = 5, search = '' }) => 
+				`products?page=${page}&limit=${limit}&search=${search}`,
 			transformResponse: (response: { products: any[]; pagination: any }) => ({
 				products: response.products,
 				pagination: response.pagination,
@@ -16,18 +24,11 @@ export const productApi = createApi({
 			query: (id) => `products/${id}`,
 			transformResponse: (response: { product: any[] }) => ({
 				product: response.product,
-			}), // Adjust transformation as needed
+			}),
 		}),
-		// getProductsByCategory: builder.query({
-		// 	query: ({ categoryId, page = 1, limit = 5 }) =>
-		// 		`products?categoryId=${categoryId}page=${page}&limit=${limit}`,
-		// 	transformResponse: (response: { products: any[] }) => ({
-		// 		products: response.products,
-		// 	}),
-		// }),
 		getProductsByCategory: builder.query({
-			query: ({ categoryId, page = 1, limit = 5 }) =>
-				`products?categoryId=${categoryId}&page=${page}&limit=${limit}`,
+			query: ({ categoryId, page = 1, limit = 5, search = '' }) =>
+				`products?categoryId=${categoryId}&page=${page}&limit=${limit}&search=${search}`,
 			transformResponse: (response: {
 				products: any[];
 				pagination: { total: number; page: number; limit: number; totalPages: number };
