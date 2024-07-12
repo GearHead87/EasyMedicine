@@ -1,6 +1,6 @@
 # EasyMedicine
 
-[Livelink](https://easy-medicine.vercel.app/)
+[Live Link](https://easy-medicine.vercel.app/)
 
 ```plaintext
 admin-email: hosanulislam87@gmail.com
@@ -9,7 +9,12 @@ admin-password: 123456
 
 This repository contains the code for a Next.js application with a backend powered by Prisma and PostgreSQL. The application includes user management, product management with pagination, and category-based product filtering.
 
-Set up the environment variables:
+## Note on File Uploads
+
+File upload functionality will not work on Vercel but can be used in localhost.
+
+## Environment Variables
+
 Create a `.env` file in the root of the project with the following content:
 
 ```plaintext
@@ -24,9 +29,9 @@ NEXT_PUBLIC_API_URL="https://easy-medicine.vercel.app"
 
 Make sure you have the following installed:
 
--   Node.js
--   npm (or yarn)
--   PostgreSQL
+- Node.js
+- npm (or yarn)
+- PostgreSQL
 
 ### Installation
 
@@ -34,7 +39,7 @@ Make sure you have the following installed:
 
     ```sh
     git clone https://github.com/GearHead87/easymedicine.git
-    cd my-app
+    cd easymedicine
     ```
 
 2. Install the dependencies:
@@ -72,55 +77,52 @@ Make sure you have the following installed:
 
 ## Project Structure
 
--   **api/**: Contains the API route handlers.
--   **lib/**: Contains utility functions and Prisma setup.
--   **components/**: Contains React components.
--   **pages/**: Contains Next.js pages.
--   **src/**: Contains application source code, including Redux services.
+- **api/**: Contains the API route handlers.
+- **lib/**: Contains utility functions and Prisma setup.
+- **components/**: Contains React components.
+- **pages/**: Contains Next.js pages.
+- **src/**: Contains application source code, including Redux services.
 
 ## Features
 
--   User Management
--   Product Management with Pagination
--   Category-based Product Filtering
+- User Management
+- Product Management with Pagination
+- Category-based Product Filtering
 
 ## API Routes
 
 ### Users
 
--   `GET /api/users`: Fetch all users with optional pagination and filtering.
+- `GET /api/users`: Fetch all users with optional pagination and filtering.
+    - **Query Parameters**:
+        - `page` (optional): The page number (default: 1).
+        - `limit` (optional): The number of users per page (default: 10).
+        - `search` (optional): A search term to filter users by name or email.
 
-    -   **Query Parameters**:
-        -   `page` (optional): The page number (default: 1).
-        -   `limit` (optional): The number of users per page (default: 10).
-        -   `search` (optional): A search term to filter users by name or email.
-
--   `DELETE /api/users/[id]`: Delete a user by ID and their profile picture.
-    -   **Path Parameters**:
-        -   `id`: The ID of the user to delete.
+- `DELETE /api/users/[id]`: Delete a user by ID and their profile picture.
+    - **Path Parameters**:
+        - `id`: The ID of the user to delete.
 
 ### Products
 
--   `GET /api/products`: Fetch all products with optional pagination and category filtering.
+- `GET /api/products`: Fetch all products with optional pagination and category filtering.
+    - **Query Parameters**:
+        - `page` (optional): The page number (default: 1).
+        - `limit` (optional): The number of products per page (default: 10).
+        - `categoryId` (optional): Filter products by category ID.
 
-    -   **Query Parameters**:
-        -   `page` (optional): The page number (default: 1).
-        -   `limit` (optional): The number of products per page (default: 10).
-        -   `categoryId` (optional): Filter products by category ID.
-
--   `PATCH /api/products/[id]`: Update a product by ID.
-    -   **Path Parameters**:
-        -   `id`: The ID of the product to update.
-    -   **Body**:
-        -   `name`: The new name of the product.
-        -   `description`: The new description of the product.
-        -   `price`: The new price of the product.
-        -   `stock`: The new stock level of the product.
-        -   `categoryId`: The new category ID of the product.
-        -   `mgOptions`: The new variant options for the product.
-        -   `image`: The new image file for the product.
+- `PATCH /api/products/[id]`: Update a product by ID.
+    - **Path Parameters**:
+        - `id`: The ID of the product to update.
+    - **Body**:
+        - `name`: The new name of the product.
+        - `description`: The new description of the product.
+        - `price`: The new price of the product.
+        - `stock`: The new stock level of the product.
+        - `categoryId`: The new category ID of the product.
+        - `mgOptions`: The new variant options for the product.
+        - `image`: The new image file for the product.
 
 ## License
 
 This project is licensed under the MIT License.
-
