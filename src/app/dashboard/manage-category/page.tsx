@@ -1,5 +1,16 @@
 //@ts-nocheck
 'use client';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,9 +42,9 @@ const CategoryPage = () => {
 	const { data: categories = [], isLoading, error } = useGetCategoriesQuery({});
 	const [addCategory] = useAddCategoryMutation();
 	const [deleteCategory] = useDeleteCategoryMutation();
-
 	const [categoryName, setCategoryName] = useState('');
 	const [parentId, setParentId] = useState<string | null>(null);
+	const [categoryIdToDelete, setCategoryIdToDelete] = useState<string | null>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -53,11 +64,14 @@ const CategoryPage = () => {
 	};
 
 	const handleDelete = async (categoryId: string) => {
-		try {
-			await deleteCategory(categoryId).unwrap();
-			toast("Deleted Successfully")
-		} catch (e) {
-			console.error(e);
+		if (categoryIdToDelete) {
+			try {
+				await deleteCategory(categoryIdToDelete).unwrap();
+				toast('Deleted Successfully');
+			} catch (e) {
+				toast('Something Went Wrong');
+				console.error(e);
+			}
 		}
 	};
 
@@ -69,8 +83,8 @@ const CategoryPage = () => {
 		return <div>Unauthorized access.</div>;
 	}
 
-	if(isLoading){
-		return <div>Loading ....</div>
+	if (isLoading) {
+		return <div>Loading ....</div>;
 	}
 
 	const renderCategories = (categories: CategoryProps[]) => {
@@ -78,13 +92,40 @@ const CategoryPage = () => {
 			<div key={category.id} className="mb-2 space-y-2">
 				<p className="font-semibold flex justify-between items-center">
 					{category.name}
-					<Button
+					{/* <Button
 						variant="destructive"
 						onClick={() => handleDelete(category.id)}
 						className="ml-4"
 					>
 						Delete
-					</Button>
+					</Button> */}
+					<AlertDialog>
+						<AlertDialogTrigger asChild>
+							<Button
+								variant="destructive"
+								onClick={() => setCategoryIdToDelete(category.id)}
+							>
+								Delete
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+								<AlertDialogDescription>
+									Are you sure you want to delete this category? This action
+									cannot be undone.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel onClick={() => setCategoryIdToDelete(null)}>
+									Cancel
+								</AlertDialogCancel>
+								<AlertDialogAction onClick={() => handleDelete()}>
+									Delete
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 				</p>
 				{category.subcategories && category.subcategories.length > 0 && (
 					<div className="ml-4">{renderCategories(category.subcategories)}</div>

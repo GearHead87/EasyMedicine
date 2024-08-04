@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import LoadingSpinner from '@/components/ui/loadingSpinner';
 import {
 	Select,
 	SelectContent,
@@ -25,6 +26,7 @@ const AddProductPage = () => {
 	const [stock, setStock] = useState(0);
 	const [categoryId, setCategoryId] = useState('');
 	const [mgOptions, setMgOptions] = useState<Array<{ mg: number; price: number }>>([]);
+	const [formLoading, setFormLoading] = useState(false);
 	// const [mgOptions, setMgOptions] = useState<Array<{ mg: number; price: number }>>([
 	// 	{ mg: 0, price: 0 },
 	// ]);
@@ -53,6 +55,7 @@ const AddProductPage = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setFormLoading(true);
 
 		const productData = {
 			name: productName,
@@ -79,10 +82,12 @@ const AddProductPage = () => {
 			const { data } = await axiosCommon.post('/api/product', formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
-			toast("Product Added Successfully")
+			toast('Product Added Successfully');
 			console.log(data);
 		} catch (e) {
 			console.log(e);
+		} finally {
+			setFormLoading(false);
 		}
 	};
 
@@ -233,13 +238,22 @@ const AddProductPage = () => {
 					Add Mg Option
 				</Button>
 			</div>
-
-			<Button
-				type="submit"
-				className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
-			>
-				Add Product
-			</Button>
+			{formLoading ? (
+				<Button
+					type="submit"
+					className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
+					disabled
+				>
+					<LoadingSpinner /> Adding Product...
+				</Button>
+			) : (
+				<Button
+					type="submit"
+					className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
+				>
+					Add Product
+				</Button>
+			)}
 		</form>
 	);
 };

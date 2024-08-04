@@ -5,14 +5,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useAxiosCommon from '@/hooks/useAxiosCommon';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
+import LoadingSpinner from '../ui/loadingSpinner';
 
 export const SignUpForm = () => {
 	const router = useRouter();
 	const axiosCommon = useAxiosCommon();
+	const [formLoading, setFormLoading] = useState(false);
+
 	const formSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setFormLoading(true);
 		const form = e.target;
 		const formData = new FormData(form);
 
@@ -20,10 +24,13 @@ export const SignUpForm = () => {
 			const { data } = await axiosCommon.post('/api/signup', formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
-			toast("Sign up successful")
-			router.push('/')
+			toast('Sign up successful');
+			router.push('/');
+			setFormLoading(false);
 			console.log(data);
 		} catch (e) {
+			setFormLoading(false);
+			toast('Something went wrong');
 			console.log(e);
 		}
 	};
@@ -64,9 +71,15 @@ export const SignUpForm = () => {
 					<Label htmlFor="picture">Picture</Label>
 					<Input id="image" name="image" type="file" />
 				</div>
-				<Button type="submit" className="w-full">
-					Register
-				</Button>
+				{formLoading ? (
+					<Button type="submit" className="w-full opacity-70 cursor-not-allowed" disabled>
+						<LoadingSpinner />
+					</Button>
+				) : (
+					<Button type="submit" className="w-full">
+						Register
+					</Button>
+				)}
 			</form>
 		</div>
 	);

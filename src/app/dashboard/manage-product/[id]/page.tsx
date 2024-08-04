@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import LoadingSpinner from '@/components/ui/loadingSpinner';
 import {
 	Select,
 	SelectContent,
@@ -56,6 +57,7 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 		{ mg: 0, price: 0 },
 	]);
 	const [image, setImage] = useState<File | null>(null);
+	const [formLoading, setFormLoading] = useState(false);
 
 	useEffect(() => {
 		if (productData) {
@@ -88,6 +90,7 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setFormLoading(true);
 
 		const newProductData = {
 			name: productName,
@@ -115,10 +118,12 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 			const { data } = await axiosCommon.patch(`/api/products/${productId}`, formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
-			toast("Product Updated")
+			toast('Product Updated');
 			console.log(data);
 		} catch (e) {
 			console.log(e);
+		} finally {
+			setFormLoading(false);
 		}
 	};
 
@@ -265,12 +270,22 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => {
 						</Button>
 					</div>
 
-					<Button
-						type="submit"
-						className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
-					>
-						Update Product
-					</Button>
+					{formLoading ? (
+						<Button
+							type="submit"
+							className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
+							disabled
+						>
+							<LoadingSpinner /> Updating Product...
+						</Button>
+					) : (
+						<Button
+							type="submit"
+							className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
+						>
+							Update Product
+						</Button>
+					)}
 				</>
 			)}
 		</form>

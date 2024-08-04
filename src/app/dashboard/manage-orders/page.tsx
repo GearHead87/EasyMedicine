@@ -18,21 +18,22 @@ interface OrderProps {
 	id: string;
 	status: string;
 	totalAmount: number;
-	orderItems: []
+	orderItems: [];
 }
 interface ItemsProps {
 	id: string;
 	quantity: number;
 	price: number;
 	product: {
-		name: string
-	}
+		name: string;
+	};
 }
 
 const AdminOrdersPage = () => {
 	const { data: session, status } = useSession();
 	const [orders, setOrders] = useState([]);
 	const [loadingOrders, setLoadingOrders] = useState(true);
+	const [refetch, setRefetch] = useState(false);
 
 	useEffect(() => {
 		const fetchOrders = async () => {
@@ -49,7 +50,7 @@ const AdminOrdersPage = () => {
 		};
 
 		fetchOrders();
-	}, []);
+	}, [refetch]);
 
 	const handleChangeStatus = async (orderId: string, status: string) => {
 		try {
@@ -66,7 +67,8 @@ const AdminOrdersPage = () => {
 					order.id === updatedOrder.id ? updatedOrder : order
 				);
 				setOrders(updatedOrders as never);
-				toast("Status Updated")
+				toast('Status Updated');
+				setRefetch(!refetch);
 			} else {
 				console.error('Failed to update order status');
 			}
