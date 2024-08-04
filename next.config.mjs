@@ -5,8 +5,25 @@ const nextConfig = {
 	},
 	// webpack5: true,
 	webpack: (config) => {
-		config.resolve.fallback = { fs: false, bcrypt: false, child_process: false, tls: false, net:false, nock:false };
+		config.resolve.fallback = {
+			fs: false,
+			bcrypt: false,
+			child_process: false,
+			tls: false,
+			net: false,
+			nock: false,
+		};
 		return config;
+	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '*',
+				port: '',
+				pathname: '**',
+			},
+		],
 	},
 };
 

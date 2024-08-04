@@ -16,9 +16,9 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
         }
 
         // Delete the profile picture if it exists
-        if (user.image) {
-            await deleteImage(user.image);
-        }
+        // if (user.image) {
+        //     await deleteImage(user.image);
+        // }
 
         // Delete the user
 		await prisma.user.delete({

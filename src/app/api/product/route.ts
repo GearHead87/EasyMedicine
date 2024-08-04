@@ -1,4 +1,4 @@
-import { imageUpload } from '@/lib/imageUpload';
+import { imageUpload } from '@/lib/utils';
 import prisma from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 		const mgOptions = JSON.parse(formData.get('mgOptions') as string);
 		const image = formData.get('image') as File;
 
-		const imageUrl = await imageUpload({ image });
+		const imageUrl = await imageUpload( image );
 
 		if (!imageUrl) {
 			return NextResponse.json({ error: 'No image provided' }, { status: 400 });

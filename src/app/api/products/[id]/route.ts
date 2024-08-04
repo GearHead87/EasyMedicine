@@ -1,6 +1,6 @@
 // src/app/api/products/[id]/route.ts
 import { deleteImage } from '@/lib/deleteImage';
-import { imageUpload } from '@/lib/imageUpload';
+import { imageUpload } from '@/lib/utils';
 import prisma from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -31,7 +31,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 		console.log('delete Product=>', res);
 
 		// Delete the product image
-		await deleteImage(product.image);
+		// await deleteImage(product.image);
 
 		return NextResponse.json({ message: 'Product deleted successfully' }, { status: 200 });
 	} catch (error) {
@@ -96,14 +96,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
 		// Handle image update
 		if (image) {
-			const imgRes = await imageUpload({ image });
+			const imgRes = await imageUpload( image );
 			if (imgRes) {
 				productData.image = imgRes;
 
 				// Delete the old image if it exists
-				if (existingProduct.image) {
-					await deleteImage(existingProduct.image);
-				}
+				// if (existingProduct.image) {
+				// 	await deleteImage(existingProduct.image);
+				// }
 			} else {
 				return NextResponse.json({ error: 'Image Error' }, { status: 400 });
 			}
