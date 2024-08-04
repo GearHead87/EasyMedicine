@@ -13,7 +13,7 @@ export const imageUpload = async (image: File): Promise<string> => {
 
   try {
     const { data } = await axios.post<{ data: { display_url: string } }>(
-      `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_API_URL}`,
+      `https://api.imgbb.com/1/upload?key=${process.env.NEXT_IMGBB_API_KEY}`,
       formData
     );
     return data.data.display_url;
