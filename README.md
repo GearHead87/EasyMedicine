@@ -2,10 +2,10 @@
 
 [Live Link](https://easy-medicine.vercel.app/)
 
-```plaintext
+<!-- ```plaintext
 admin-email: hosanulislam87@gmail.com
 admin-password: 123456
-```
+``` -->
 
 This repository contains the code for a Next.js application with a backend powered by Prisma and PostgreSQL. The application includes user management, product management with pagination, and category-based product filtering.
 
@@ -17,10 +17,16 @@ File upload functionality will not work on Vercel but can be used in localhost.
 
 Create a `.env` file in the root of the project with the following content:
 
-```plaintext
+<!-- ```plaintext
 DATABASE_URL="postgresql://postgres:jAVZUMJGZSfZXnqNItSiyBwtDzTjfIHt@roundhouse.proxy.rlwy.net:36736/railway"
 NEXTAUTH_SECRET="Secret"
 NEXT_PUBLIC_API_URL="https://easy-medicine.vercel.app"
+``` -->
+
+```plaintext
+DATABASE_URL=
+NEXTAUTH_SECRET=
+NEXT_PUBLIC_API_URL=
 ```
 
 ## Getting Started
