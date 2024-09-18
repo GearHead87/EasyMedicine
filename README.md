@@ -60,9 +60,9 @@ Make sure you have the following installed:
    Create a `.env` file in the root of the project with the following content:
 
     ```plaintext
-    DATABASE_URL="postgresql://postgres:jAVZUMJGZSfZXnqNItSiyBwtDzTjfIHt@roundhouse.proxy.rlwy.net:36736/railway"
-    NEXTAUTH_SECRET="Secret"
-    NEXT_PUBLIC_API_URL="https://easy-medicine.vercel.app"
+    DATABASE_URL=
+    NEXTAUTH_SECRET=
+    NEXT_PUBLIC_API_URL=
     ```
 
 4. Run the database migrations:
